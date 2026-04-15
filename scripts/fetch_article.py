@@ -44,8 +44,7 @@ def fetch_html(url: str, timeout: int = 15) -> str:
     try:
         response = requests.get(url, headers=headers, timeout=timeout)
         response.raise_for_status()
-        response.encoding = response.apparent_encoding  # 自动检测编码
-        return response.text
+        return response.content.decode('utf-8', errors='ignore')  # 微信文章都是 UTF-8
     except requests.exceptions.RequestException as e:
         raise Exception(f"下载失败：{e}")
 
